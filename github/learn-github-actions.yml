@@ -34,3 +34,7 @@ jobs:
         env:
           CHROME_OPTIONS: --disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless;--window-size=1920,1080
           CI_RUN: true
+
+      - name: Check on failures
+          if: steps.test.outcome != 'success'
+          run: exit 1
