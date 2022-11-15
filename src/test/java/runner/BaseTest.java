@@ -40,6 +40,8 @@ public abstract class BaseTest {
     protected void tearDown() {
         if (driver != null) {
             driver.quit();
+
+
         }
     }
 }
