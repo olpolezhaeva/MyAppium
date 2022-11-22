@@ -1,7 +1,10 @@
 package runner;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.remote.MobilePlatform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 
@@ -32,16 +35,32 @@ public abstract class BaseTest {
 //            desiredCapabilities.setCapability("appActivity", "com.skylexit.skylex_app.develop");
 //
 //            desiredCapabilities.setCapability("noReset", "true");
+
+        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ANDROID_UIAUTOMATOR2);
+        desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
+        desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.DISABLE_ANDROID_WATCHERS, true);
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.NO_SIGN, "true");
+
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, "*");
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.RECREATE_CHROME_DRIVER_SESSIONS, true);
+
+
+        desiredCapabilities.setCapability(MobileCapabilityType.CLEAR_SYSTEM_FILES, true);
+        desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 180);
+        desiredCapabilities.setCapability(MobileCapabilityType.FULL_RESET, false);
+        desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, false);
+
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        //wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @AfterMethod
     protected void tearDown() {
         if (driver != null) {
             driver.quit();
-
-
         }
     }
 }
